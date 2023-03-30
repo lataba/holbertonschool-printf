@@ -3,19 +3,19 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-int (*get_func(const char *symbol))(va_list args)
+int (*get_func(const char symbol))(va_list args)
 {
 	int i = 0;
 	print_spec specifiers[] = {
-		{"c", print_char},
-		{"s", print_string},
-		{"%", print_percent},
-		{"d", print_int},
-		{"i", print_int},
-		{NULL, NULL}
+		{'c', print_char},
+		{'s', print_string},
+		{'%', print_percent},
+		{'d', print_int},
+		{'i', print_int},
+		{'\0', NULL}
 	};
 
-	while (specifiers[i].specifier != NULL)
+	while (specifiers[i].specifier != '/0')
 	{
 		if (specifiers[i].specifier == symbol)
 			return (specifiers[i].function);
@@ -37,7 +37,7 @@ int putout(const char c)
 
 /**
  * print_char - Writes a char variable on stdout
- * @args: Variadic argument to be printed
+ * @args: Variadic argument to be pr'/0'd
  * Return: The number of characters that are printed
  */
 int print_char (va_list args)

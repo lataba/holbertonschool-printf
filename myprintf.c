@@ -5,7 +5,7 @@
 int _printf(const char *format, ...)
 {
 	int count = 0, i = 0;
-	char *symbol = "";
+	char symbol = '\0';
 	va_list args;
 	va_start (args, format);
 
@@ -18,7 +18,7 @@ int _printf(const char *format, ...)
 			i++;
 			if (format[i] == '\0')
 				return (-1);
-			*symbol = *(format + 1);
+			symbol = format[i];
 			count = count + (get_func(symbol)(args));
 		}
 		else

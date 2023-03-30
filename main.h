@@ -4,10 +4,10 @@
 
 int putout(char c);
 int _printf(const char *format, ...);
-int (*get_func(const char *symbol))(va_list);
+int (*get_func(const char symbol))(va_list);
 
 typedef struct {
-	char *specifier;
+	char specifier;
 	int (*function)(va_list);
 } print_spec;
 
