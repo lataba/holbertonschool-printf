@@ -3,41 +3,66 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+int (*get_func(const char *symbol))(va_list args)
+{
+	int i = 0;
+	print_spec specifiers[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"d", print_int},
+		{"i", print_int},
+		{NULL, NULL}
+	};
+
+	while (specifiers[i].specifier != NULL)
+	{
+		if (specifiers[i].specifier == symbol)
+			return (specifiers[i].function);
+		i++;
+	}
+	return (0);
+}
+
+
 /**
 * putout - Writes the character c to stdout
 * @c: The character to print
-* Return: On success 1.
+* Return: a char
 */
-int putout(char c)
+int putout(const char c)
 {
 	return (write(1, &c, 1));
-	return (0);
 }
 
 /**
  * print_char - Writes a char variable on stdout
  * @args: Variadic argument to be printed
- * @len: The number of characters was printed
- * Return: The increased number of characters that are printed
+ * Return: The number of characters that are printed
  */
-int print_char (va_list *args, int len)
+int print_char (va_list args)
 {
-	char c = (char) va_arg(*args, int);
+	const char c = va_arg(args, int);
 
 	putout(c);
-	return (len++);
+	return (1);
 }
 
 /**
  * print_string - Prints a string
  * @args: Variadic argument to be printed
- * @len: The number of characters was printed
- * Return: The increased number of characters that are printed
+ * Return: The number of characters that are printed
  */
-int print_string(va_list *args, int len)
+int print_string(va_list args)
 {
-	char *str = va_arg(*args, char *);
+	int len = 0;
+	char *str = va_arg(args, char *);
 
+	if (str == NULL)
+	{
+		_printf("(null)");
+		return(-6);
+	}
 	while (*str != '\0')
 	{
 		putout(*str);
@@ -50,36 +75,40 @@ int print_string(va_list *args, int len)
 /**
  * print_percent - Write a percentage symbol on the stdoutput
  * @args: Variadic argument to be printed
- * @len: The number of characters was printed
- * Return: The increased number of characters that are printed
+ * Return: The number of characters that are printed
  */
-int print_percent(va_list *args, int len)
+int print_percent(va_list args)
 {
+	(void)args;
 	putout('%');
-	return (len++);
+	return (1);
 }
 
 /**
  * print_int - Prints an integer as a character string
  * @args: Variadic argument to be printed
- * @len: The number of characters was printed
- * Return: The increased number of characters that are printed
+ * Return: The number of characters that are printed
  */
-int print_int (va_list *args, int len)
+int print_int (va_list args)
 {
-	int n = va_arg(*args, int);
-
-	if (n < 0)
+	int len = 0, div = 1;
+	int num = va_arg(args, int);
+	unsigned int unum = num;
+	
+	if (num < 0)
 	{
 		putout('-');
-		n = -n;
+		unum = -num;
 		len++;
 	}
-	if (n / 10)
+	while (unum / div > 9)
+		div = div * 10;
+	while (div != 0)
 	{
-		print_int(args, len);
-		putout((n % 10) + '0');
+		putout((unum / 10) + '0');
 		len++;
+		unum = unum % div;
+		div = div /10;
 	}
 	return (len);
 }

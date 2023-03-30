@@ -4,43 +4,29 @@
 
 int _printf(const char *format, ...)
 {
-	char symbol = "";
-	int i = 0, count = 0;
+	int count = 0, i = 0;
+	char *symbol = "";
 	va_list args;
-
 	va_start (args, format);
 
-	print_spec specifiers[] = {
-		{'c', print_char},
-		{'s', print_string}
-		{'%', print_percent}
-		{'d', print_int}
-		{'i', print_int}
-		{NULL, NULL}
-	};
-
-	while (format && *format != '\0')
+	if (!format)
+		return (-1);
+	while (format[i] != '\0')
 	{
-		if (*format == %)
+		if (format[i] == '%')
 		{
-			format++;
-			symbol = *format;
-			while (specifiers[i].specifier != NULL)
-			{
-				if (specifiers[i].specifier == symbol)
-				{
-					specifier[i].function(&args, count);
-					break;
-				}
-				i++;
-			}
+			i++;
+			if (format[i] == '\0')
+				return (-1);
+			*symbol = *(format + 1);
+			count = count + (get_func(symbol)(args));
 		}
 		else
 		{
-			putout(*format);
+			putout(format[i]);
 			count++;
 		}
-		format++;
+		i++;
 	}
 		va_end (args);
 		return (count);
