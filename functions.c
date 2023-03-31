@@ -3,49 +3,33 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-int (*get_func(const char symbol))(va_list args)
-{
-	int i = 0;
-	print_spec specifiers[] = {
-		{'c', print_char},
-		{'s', print_string},
-		{'%', print_percent},
-		{'d', print_int},
-		{'i', print_int},
-		{'\0', NULL}
-	};
-
-	while (specifiers[i].specifier != '/0')
-	{
-		if (specifiers[i].specifier == symbol)
-			return (specifiers[i].function);
-		i++;
-	}
-	return (0);
-}
-
-
-/**
-* putout - Writes the character c to stdout
-* @c: The character to print
-* Return: a char
-*/
-int putout(const char c)
-{
-	return (write(1, &c, 1));
-}
-
 /**
  * print_char - Writes a char variable on stdout
- * @args: Variadic argument to be pr'/0'd
+ * @args: Variadic argument to be printed
  * Return: The number of characters that are printed
  */
 int print_char (va_list args)
 {
-	const char c = va_arg(args, int);
+	const char c = (char)va_arg(args, int);
 
 	putout(c);
 	return (1);
+}
+
+/**
+ * print_nopercent - Writes % followed by the symbol
+ * when it not matches with any function
+ * @args: variadic argument is not utilized here
+ * Return: 2 (the number of characters that are printed)
+ */
+
+int print_nopercent(va_list args)
+{
+	const char c = (char)va_arg(args, int);
+
+	putout('%');
+	putout(c);
+	return (2);
 }
 
 /**
@@ -61,13 +45,12 @@ int print_string(va_list args)
 	if (str == NULL)
 	{
 		_printf("(null)");
-		return(-6);
+		return (6);
 	}
-	while (*str != '\0')
+	while (str[len] != '\0')
 	{
-		putout(*str);
+		putout(str[len]);
 		len++;
-		str++;
 	}
 	return (len);
 }
@@ -89,12 +72,13 @@ int print_percent(va_list args)
  * @args: Variadic argument to be printed
  * Return: The number of characters that are printed
  */
+
 int print_int (va_list args)
 {
 	int len = 0, div = 1;
 	int num = va_arg(args, int);
 	unsigned int unum = num;
-	
+
 	if (num < 0)
 	{
 		putout('-');
@@ -108,7 +92,7 @@ int print_int (va_list args)
 		putout((unum / 10) + '0');
 		len++;
 		unum = unum % div;
-		div = div /10;
+		div = div / 10;
 	}
 	return (len);
 }

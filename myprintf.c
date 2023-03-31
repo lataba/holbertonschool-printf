@@ -2,32 +2,39 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+/**
+ * _printf - Function that prints formatted data od the stdoutput
+ * @format: String of characters containing the information to be printed
+ * Return: The number of characters printed
+ */
+
 int _printf(const char *format, ...)
 {
 	int count = 0, i = 0;
 	char symbol = '\0';
 	va_list args;
-	va_start (args, format);
+
+	va_start(args, format); /*Initializing the argument list*/
 
 	if (!format)
 		return (-1);
-	while (format[i] != '\0')
+	while (format[i] != '\0') /*Traversing the format string*/
 	{
-		if (format[i] == '%')
+		if (format[i] == '%') /*Checking the format specifier*/
 		{
 			i++;
 			if (format[i] == '\0')
 				return (-1);
 			symbol = format[i];
-			count = count + (get_func(symbol)(args));
+			count = count + get_func(symbol)(args);
 		}
-		else
+		else /*Printing if the specifier is not matched*/
 		{
-			putout(format[i]);
-			count++;
+				putout(format[i]);
+				count++;
 		}
 		i++;
 	}
-		va_end (args);
+		va_end(args); /*Finalization of the list*/
 		return (count);
 }
