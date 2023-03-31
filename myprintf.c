@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 /**
- * _printf - Function that prints formatted data od the stdoutput
+ * _printf - Function that prints formatted data on the stdoutput
  * @format: String of characters containing the information to be printed
  * Return: The number of characters printed
  */
@@ -30,8 +30,7 @@ int _printf(const char *format, ...)
 		}
 		else /*Printing if the specifier is not matched*/
 		{
-				putout(format[i]);
-				count++;
+			count = count + putout(format[i]);
 		}
 		i++;
 	}
