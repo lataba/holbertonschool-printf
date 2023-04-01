@@ -27,7 +27,11 @@ int (*get_func(const char symbol))(va_list args)
 		i++;
 	}
 	if (specifiers[i].specifier == '\0')
+	{
+		putout('%');
+		putout(symbol);
 		return (print_nopercent);
+	}
 	return (0);
 }
 
@@ -36,7 +40,7 @@ int (*get_func(const char symbol))(va_list args)
 * @c: The character to be printed
 * Return: Non
 */
-int putout(const char c)
+int putout(char c)
 {
 	return (write(1, &c, 1));
 }

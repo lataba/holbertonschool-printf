@@ -25,10 +25,7 @@ int print_char (va_list args)
 
 int print_nopercent(va_list args)
 {
-	const char c = (char)va_arg(args, int);
-
-	putout('%');
-	putout(c);
+	(void)args;
 	return (2);
 }
 
@@ -39,7 +36,7 @@ int print_nopercent(va_list args)
  */
 int print_string(va_list args)
 {
-	int len = 0;
+	int count = 0;
 	char *str = va_arg(args, char *);
 
 	if (str == NULL)
@@ -47,12 +44,12 @@ int print_string(va_list args)
 		_printf("(null)");
 		return (6);
 	}
-	while (str[len] != '\0')
+	while (str[count] != '\0')
 	{
-		putout(str[len]);
-		len++;
+		putout(str[count]);
+		count++;
 	}
-	return (len);
+	return (count);
 }
 
 /**
@@ -73,26 +70,30 @@ int print_percent(va_list args)
  * Return: The number of characters that are printed
  */
 
-int print_int (va_list args)
+int print_int(va_list args)
 {
-	int len = 0, div = 1;
-	int num = va_arg(args, int);
-	unsigned int unum = num;
+	int count = 0, div = 1;
+	unsigned int num = 0, total = 0;
+	int n = va_arg(args, int);
 
-	if (num < 0)
+	if (n < 0)
 	{
 		putout('-');
-		unum = -num;
-		len++;
+		num = -n;
+		count++;
 	}
-	while (unum / div > 9)
+	else
+		num = n;
+	total = num;
+	while (num / div > 9)
 		div = div * 10;
 	while (div != 0)
 	{
-		putout((unum / 10) + '0');
-		len++;
-		unum = unum % div;
+		num = num / div;
+		putout((num + '0'));
+		count++;
+		num = total % div;
 		div = div / 10;
 	}
-	return (len);
+	return (count);
 }
