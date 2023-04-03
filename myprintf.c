@@ -19,6 +19,7 @@ int _printf(const char *format, ...)
 			if (format[i] == '\0')
 				return (-1);
 			*symbol = *(format + 1);
+
 			count = count + (get_func(symbol)(args));
 		}
 		else
