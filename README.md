@@ -65,5 +65,3 @@ Then you can run it using this command:
 ```
 ./myprintf
 ```
-
-https://drive.google.com/file/d/1eWMzpQ1bcCftUHYcBGN03cqJMMtEOvMA/view?usp=share_link
