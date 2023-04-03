@@ -17,7 +17,6 @@ To use this implementation of printf(), follow these steps:
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c -o myprintf
 ```
 
-
 ## Usage
 Call the myprintf() function using the same format specifiers as the standard printf() function. This implementation of printf() supports the following format specifiers:
 
@@ -42,7 +41,6 @@ myprintf("Hello, I'm %s! I'm %d years old.\n", "Laura", 30);
 Hello, I'm Laura! I'm 30 years old.
 ```
 
-
 ## Limitations
 
 This implementation of printf() has some limitations compared to the standard printf() function. Here are a few things to keep in mind:
@@ -56,7 +54,6 @@ It does not perform any input validation, so it is possible to cause buffer over
 It is not type-safe, so it is possible to pass in arguments of the wrong type and cause undefined behavior.
 
 
-
 ## Test
 
 If you want to test this function you can download any of the files included in the [Tests](https://github.com/lataba/holbertonschool-printf/tree/master/Tests) folder. To do this you must include the file in the same folder as the rest, and you must compile everything again. 
@@ -65,3 +62,7 @@ Then you can run it using this command:
 ```
 ./myprintf
 ```
+
+## Flowchart
+
+[](https://github.com/lataba/holbertonschool-printf/blob/3995bb092a781a51ea389a9438c2984fa5e2cb93/Prinf%20flowchart%20(1).png)
