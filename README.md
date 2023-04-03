@@ -65,4 +65,4 @@ Then you can run it using this command:
 
 ## Flowchart
 
-[](https://github.com/lataba/holbertonschool-printf/blob/3995bb092a781a51ea389a9438c2984fa5e2cb93/Prinf%20flowchart%20(1).png)
+[](https://github.com/lataba/holbertonschool-printf/blob/d632d5ffeca6ec94a28cca507db6820455400e89/Prinf%20flowchart.jpeg)
